@@ -1,0 +1,160 @@
+type: "ow_ros_control_plugin/OwRosControlPlugin"
+
+# global paramerter
+simulation:       false
+loop_rate:        200.0   
+publish_rate:     200.0                                                         # Crank this back up for flags!
+hip_height:       0.8
+step_time:        1.2     # [s]                                                 # WHY is this so super sensitive?        
+t_double_support: 0.3     # [s]
+t_single_support: 0.9     # [s]                                                 # step times per action? "When to make a step"
+
+# debugging
+kp_imu_offset: [0.0, 0.0, 0.0]
+
+# inital pose before waklking
+ready_pose:
+    hip_sagital:      0.0
+    feet_separation:  0.16                                                      # 0.15
+    total_time:       2.0
+    q_home_upper: [ 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,           # Left leg, keep it zero.
+                    0.0, 0.0, 0.0, 0.0, 0.0, 0.0,           # Right leg, keep it zero.   
+                    0.0, 0.0,                               # Torso
+                    -0.43, 0.26, 0.0, 0.87, 0.0, 0.0, 0.0,  # Left arm
+                    -0.43, 0.26, 0.0, 0.87, 0.0, 0.0, 0.0,  # Right arm
+                    0.0, 0.0 ]                              # Head
+
+walking_planner:
+    update_rate: 10
+    n_steps:    10
+    length:     0.2 
+    angle:      0.3
+    
+    step_vis:
+      foot_size: [0.2, 0.15, 0.02]    # foot dimentsions for Rviz
+      foot_offset: [0.015, 0.0, 0.0]  # Robot foot offset to sole frame for Rviz
+        
+# minimal kinematic description of the robot
+kinematics:
+    use_com: false    # using the cat model based com / or the hip frame
+    world: 'world'    # world frame name 
+
+  # robot kinematic
+    body:
+        legs:
+            left:
+                name:  'leg_left'
+                base:  'base_link'
+                ee:    'left_sole_link'
+            right:
+                name:  'leg_right'
+                base:  'base_link'
+                ee:    'right_sole_link'
+        arms:
+            left:
+                name:  'leg_arm'
+                base:  'torso_2_link'
+                ee:    'hand_left_palm_link'
+            right:
+                name:  'arm_right'
+                base:  'torso_2_link'
+                ee:    'hand_right_palm_link'
+
+    # ik solver parameters
+    solver:
+        lambda:   0.001
+        alpha:    0.007
+        beta:     0.0
+        pos_tol:  0.0001
+        ori_tol:  0.0001
+        step_tol: 0.00000001
+        max_iter: 100
+        k_task:   200
+        k_null:   10
+
+# zero moment point estimation
+zmp:
+    sensor_height:  0.117
+    f_threshold:    100.0
+
+# balancer module
+balancer:
+    enabled:   true
+
+    # offset limits for hip motion [x,y,z] in hip frame
+    hip_offset_limits: [0.1, 0.1, 0.2]
+    hip_offset_decay:   0.99
+        
+    # Gain for Capture point tracker
+    dcm_kxp:        2.5                                                         
+    dcm_kxi:        0.0
+    
+    # Gains for ZMP tracker
+    zmp_kd:         0.0
+    zmp_kp:         1.0
+    zmp_dead_zone:  0.01
+
+    # Imu attitude compensation
+    use_imu: true               
+    Ko_imu:  [ 2.0, 2.0, 0.0]   # imu rotational gains                         
+
+    # CoM Tracker
+    gains_com:
+        Kp:     [ 0.0, 0.0, 5.0 ]                                               
+        Kd:     [ 0.0, 0.0, 0.0 ]   
+
+    # feet footprint [lower, upper] wrt to ankle
+    footprint_x: [-0.08, 0.12]    # in foot frame x direction
+    footprint_y: [-0.08, 0.08]    # in foot frame y direction
+
+# foot step planner module
+footstep_planner:
+    feet_separation:    0.15
+    max_fwd_step_size:   0.2
+    max_bwd_step_size:   0.1
+    max_side_step_size:  0.1
+    max_step_angle:      0.3
+
+foot_trajectory_generator:
+    step_height:            0.05    # [m]
+    landing_foot_pitch:     0.0     # [rad]
+    z_overhead:             0.0     # [m]
+    
+com_estimator:
+    f_cutoff: 5 # [Hz]
+
+dcm_planner:
+    vrp_shift_left:   -0.01    # [m]
+    vrp_shift_right:   0.01    # [m]
+    vrp_shift_sagital: 0.0     # [m]
+
+foot_compliance:
+    enabled:   true
+    mu_tresh: 3
+    f_normal_thesh: 200.0                                                       # 200
+    kick_torque: [ 0.0, 0.0, 0.0 ]
+
+    virtual_dynamics:
+        M: [ 0.5, 0.5, 0.5, 0.5, 0.5, 1.0]
+        D: [ 8.0, 8.0, 8.0, 8.5, 8.5, 0.1]
+        S: [ 10.0, 10.0, 10.0, 7.0, 7.0, 7.0]
+
+    gains:
+        K_track: [ 10.0, 10.0, 5.0, 5.0, 5.0, 7.0 ]   # swing foot spline tracking
+        Ko_ss_swing: [ 0.0, 0.0, 0.0 ]                  # single support swing foot compliance
+        Ko_ss_support: [ 0.005, 0.005, 0.0 ]            # single support support foot compliance
+        Ko_ds: [ 0.01, 0.01, 0.0 ]                      # double support feet compliance 
+    
+    limits:
+        pos: [0.05, 0.1, 0.05, 0.523, 0.523, 0.0872]    # [m, rad]
+        vel: [0.5, 0.5, 0.1, 1.2217, 1.2217, 1.2217]    # [m/s, rad/s]
+
+joint_tracker:
+    enabled:   true
+    offset_time: 0.01 #0.1 # 0.01
+    max_groin_offset: 0.02 # 0.01
+    max_ankle_offset: 0.02 # 0.01
+    groin_index: 1
+    ankle_index: 5
+    oposite_leg_sign: true
+

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Rviz Visualization -->
+  <node type="plotjuggler" 
+        name="plotjuggler" 
+        pkg="plotjuggler" 
+        args="--layout $(find ow_reemc)/config/layout.xml" />
+        
+</launch>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <arg name="ns" default="/open_walker" /> 
+
+  <group ns="$(arg ns)">
+
+    <!-- REEM-C robot resources for ros_control (including calibration of sensors) -->
+    <rosparam command="load" 
+              file="$(find ow_reemc)/config/reemc_resources.yaml"/>
+
+    <!-- Open Walker Parameters  -->
+    <rosparam command="load" 
+              file="$(find ow_reemc)/config/ow_parameters_real.yaml"/> 
+
+    <!-- Walking planner -->
+    <node name = "walking_planner" 
+              pkg = "ow_walking_planner" 
+              type = "ow_walking_planner_node" 
+              output = "screen"/>      
+   
+  </group>
+    
+  <!-- Spawn Open Walker in controller manager -->
+  <node name="ow_ros_control_plugin_spawner"
+        pkg="controller_manager"
+        type="spawner"
+        output="screen"
+        args="$(arg ns)"/>    
+
+  <!-- Rviz Visualization -->
+  <!-- <node type="rviz" 
+        name="rviz" 
+        pkg="rviz" 
+        args="-d $(find ow_reemc)/config/reemc.rviz" /> -->
+
+</launch>
+

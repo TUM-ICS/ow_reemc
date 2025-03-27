@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<root version="2.3.8">
+ <tabbed_widget name="Main Window" parent="main_window">
+  <Tab containers="1" tab_name="dcm_plane">
+   <Container>
+    <DockSplitter sizes="1" count="1" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" mode="XYPlot">
+       <range top="0.001682" bottom="-0.002489" right="0.006644" left="-0.000163"/>
+       <limitY/>
+       <curve name="/open_walker/COMEstimator/dcm/state/position/[x;y]" color="#1f77b4" curve_y="/open_walker/COMEstimator/dcm/state/position/y" curve_x="/open_walker/COMEstimator/dcm/state/position/x"/>
+       <curve name="/open_walker/COMTrajectoryGenerator/dcm/state/position/[x;y]" color="#17becf" curve_y="/open_walker/COMTrajectoryGenerator/dcm/state/position/y" curve_x="/open_walker/COMTrajectoryGenerator/dcm/state/position/x"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="com">
+   <Container>
+    <DockSplitter sizes="1" count="1" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" mode="XYPlot">
+       <range top="0.001683" bottom="-0.002485" right="0.006638" left="-0.000162"/>
+       <limitY/>
+       <curve name="/open_walker/COMEstimator/com/state/position/position/[x;y]" color="#ff7f0e" curve_y="/open_walker/COMEstimator/com/state/position/position/y" curve_x="/open_walker/COMEstimator/com/state/position/position/x"/>
+       <curve name="/open_walker/COMTrajectoryGenerator/com/state/position/position/[x;y]" color="#f14cc1" curve_y="/open_walker/COMTrajectoryGenerator/com/state/position/position/y" curve_x="/open_walker/COMTrajectoryGenerator/com/state/position/position/x"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="zmp">
+   <Container>
+    <DockSplitter sizes="1" count="1" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" mode="XYPlot">
+       <range top="0.193029" bottom="-0.202848" right="0.554035" left="-0.095464"/>
+       <limitY/>
+       <curve name="/open_walker/COMTrajectoryGenerator/zmp/state/position/[x;y]" color="#17becf" curve_y="/open_walker/COMTrajectoryGenerator/zmp/state/position/y" curve_x="/open_walker/COMTrajectoryGenerator/zmp/state/position/x"/>
+       <curve name="/open_walker/zmp_estimator/zmp/state/position/[x;y]" color="#bcbd22" curve_y="/open_walker/zmp_estimator/zmp/state/position/y" curve_x="/open_walker/zmp_estimator/zmp/state/position/x"/>
+       <curve name="/open_walker/balancer/zmp_desired/state/position/[x;y]" color="#1f77b4" curve_y="/open_walker/balancer/zmp_desired/state/position/y" curve_x="/open_walker/balancer/zmp_desired/state/position/x"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="dcm_time">
+   <Container>
+    <DockSplitter sizes="0.500497;0.499503" count="2" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" mode="TimeSeries">
+       <range top="1.224514" bottom="-0.029866" right="23.566000" left="13.566000"/>
+       <limitY/>
+       <curve name="/open_walker/COMTrajectoryGenerator/dcm/state/position/x" color="#bcbd22"/>
+       <curve name="/open_walker/COMEstimator/dcm/state/position/x" color="#d62728"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" mode="TimeSeries">
+       <range top="0.116796" bottom="-0.122578" right="23.566000" left="13.566000"/>
+       <limitY/>
+       <curve name="/open_walker/COMTrajectoryGenerator/dcm/state/position/y" color="#1f77b4"/>
+       <curve name="/open_walker/COMEstimator/dcm/state/position/y" color="#1ac938"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <Tab containers="1" tab_name="zmp_time">
+   <Container>
+    <DockSplitter sizes="0.333002;0.333996;0.333002" count="3" orientation="-">
+     <DockArea name="...">
+      <plot style="Lines" mode="TimeSeries">
+       <range top="3.848519" bottom="1.947473" right="41.196000" left="31.196000"/>
+       <limitY/>
+       <curve name="/open_walker/COMTrajectoryGenerator/zmp/state/position/x" color="#bcbd22"/>
+       <curve name="/open_walker/COMTrajectoryGenerator/dcm/state/position/x" color="#d62728"/>
+       <curve name="/open_walker/COMTrajectoryGenerator/com/state/position/position/x" color="#ff7f0e"/>
+       <curve name="/open_walker/COMEstimator/com/state/position/position/x" color="#d62728"/>
+       <curve name="/open_walker/COMEstimator/dcm/state/position/x" color="#ff7f0e"/>
+       <curve name="/open_walker/zmp_estimator/zmp/state/position/x" color="#9467bd"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" mode="TimeSeries">
+       <range top="29.316669" bottom="-21.542059" right="41.197000" left="31.196000"/>
+       <limitY/>
+       <curve name="/open_walker/COMTrajectoryGenerator/dcm/state/position/y" color="#1ac938"/>
+       <curve name="/open_walker/COMTrajectoryGenerator/com/state/position/position/y" color="#f14cc1"/>
+       <curve name="/open_walker/COMEstimator/com/state/position/position/y" color="#1ac938"/>
+       <curve name="/open_walker/COMEstimator/dcm/state/position/y" color="#f14cc1"/>
+       <curve name="/open_walker/COMTrajectoryGenerator/zmp/state/position/y" color="#1f77b4"/>
+       <curve name="/open_walker/zmp_estimator/zmp/state/position/y" color="#bcbd22"/>
+      </plot>
+     </DockArea>
+     <DockArea name="...">
+      <plot style="Lines" mode="TimeSeries">
+       <range top="1.025000" bottom="-0.025000" right="41.196000" left="31.196000"/>
+       <limitY/>
+       <curve name="/open_walker/flags/flags/double_support/data" color="#9467bd"/>
+       <curve name="/open_walker/flags/flags/double_support_start/data" color="#17becf"/>
+      </plot>
+     </DockArea>
+    </DockSplitter>
+   </Container>
+  </Tab>
+  <currentTabIndex index="4"/>
+ </tabbed_widget>
+ <use_relative_time_offset enabled="1"/>
+ <!-- - - - - - - - - - - - - - - -->
+ <!-- - - - - - - - - - - - - - - -->
+ <Plugins>
+  <plugin ID="DataLoad CSV">
+   <default time_axis=""/>
+  </plugin>
+  <plugin ID="DataLoad ROS bags">
+   <use_header_stamp value="false"/>
+   <use_renaming_rules value="true"/>
+   <discard_large_arrays value="true"/>
+   <max_array_size value="100"/>
+  </plugin>
+  <plugin ID="DataLoad ULog"/>
+  <plugin ID="LSL Subscriber"/>
+  <plugin ID="MQTT Subscriber"/>
+  <plugin ID="ROS Topic Subscriber">
+   <use_header_stamp value="false"/>
+   <use_renaming_rules value="true"/>
+   <discard_large_arrays value="true"/>
+   <max_array_size value="100"/>
+  </plugin>
+  <plugin ID="UDP Server"/>
+  <plugin ID="WebSocket Server"/>
+  <plugin ID="ZMQ Subscriber"/>
+  <plugin ID="CSV Exporter" status="idle"/>
+  <plugin ID="ROS /rosout Visualization" status="idle"/>
+  <plugin ID="ROS Topic Re-Publisher" status="idle"/>
+ </Plugins>
+ <!-- - - - - - - - - - - - - - - -->
+ <previouslyLoaded_Datafiles/>
+ <!-- - - - - - - - - - - - - - - -->
+ <customMathEquations/>
+ <snippets/>
+ <!-- - - - - - - - - - - - - - - -->
+</root>
+
